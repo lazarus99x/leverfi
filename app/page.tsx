@@ -78,6 +78,7 @@ export default function Home() {
             transition={{ delay: 0.3 }}
           >
             LeverFi
+            
           </motion.span>
         </motion.div>
 
