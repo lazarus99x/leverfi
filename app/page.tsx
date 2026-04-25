@@ -64,8 +64,10 @@ export default function Home() {
           >
             <motion.img
               src="/leverfi.png"
-              alt="LeverFi Logo"
-              className="w-full h-full object-contain"
+              alt="TradeWiseTab Logo"
+              width={40}
+              height={40}
+              className="rounded-xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -77,7 +79,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            LeverFi
+            TradeWiseTab
             
           </motion.span>
         </motion.div>
@@ -586,7 +588,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto space-y-8">
             <h2 className="text-4xl font-bold">Ready to Get Started?</h2>
             <p className="text-xl text-muted-foreground">
-              Join thousands of traders who have already discovered the LeverFi
+              Join thousands of traders who have already discovered the TradeWiseTab
               advantage.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -737,7 +739,7 @@ export default function Home() {
           </div>
         </div>
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p>© 2025 LeverFi. All rights reserved.</p>
+          <p>© 2025 TradeWiseTab. All rights reserved.</p>
         </div>
       </footer>
     </div>

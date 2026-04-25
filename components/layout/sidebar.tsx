@@ -49,7 +49,7 @@ export function Sidebar() {
             >
               <motion.img
                 src="/leverfi.png"
-                alt="LeverFi Logo"
+                alt="TradeWiseTab Logo"
                 className="w-full h-full object-contain"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -62,7 +62,7 @@ export function Sidebar() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              LeverFi
+              TradeWiseTab
             </motion.span>
           </motion.div>
         </Link>

@@ -8,8 +8,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Leverfi",
-  description: "Leverfi funding and automated trading platform",
+  title: "TradeWiseTab",
+  description: "TradeWiseTab funding and automated trading platform",
 };
 
 export default function RootLayout({
