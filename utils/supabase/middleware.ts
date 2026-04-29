@@ -6,6 +6,8 @@ const publicRoutes = [
   "/sign-in",
   "/sign-up",
   "/videos",
+  // Admin sign-in is public so unauthenticated admins can log in
+  "/admin/sign-in",
 ];
 
 export async function updateSession(request: NextRequest) {
@@ -44,28 +46,45 @@ export async function updateSession(request: NextRequest) {
   const isPublic = publicRoutes.some(pattern => pathname === pattern || pathname.startsWith(pattern + "/"));
   const isNextInternal = pathname.startsWith('/_next') || pathname === '/favicon.ico';
 
-  if (!user && !isPublic && !isNextInternal) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/sign-in'
-    return NextResponse.redirect(url)
-  }
+  // --- Admin route protection (runs before general auth check) ---
+  if (pathname.startsWith("/admin")) {
+    // /admin/sign-in is always accessible
+    if (pathname === "/admin/sign-in") {
+      return supabaseResponse;
+    }
 
-  // Admin route protection
-  if (pathname.startsWith("/admin") && user) {
-    // Check if user is admin
+    // Must be logged in first
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/sign-in";
+      return NextResponse.redirect(url);
+    }
+
+    // Must have admin role
     const { data: profile } = await supabase
       .from("profiles")
       .select("role")
       .eq("user_id", user.id)
       .single();
-      
+
     const isAdmin = profile?.role?.toLowerCase() === "admin";
-    
+
     if (!isAdmin) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/dashboard'
-      return NextResponse.redirect(url)
+      // Signed-in but not an admin → send back to their dashboard
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
     }
+
+    // User is a verified admin — allow through
+    return supabaseResponse;
+  }
+
+  // --- General auth protection for all other private routes ---
+  if (!user && !isPublic && !isNextInternal) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/sign-in'
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse
